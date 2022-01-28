@@ -139,11 +139,6 @@ class GenCoord():
                               y_min_gen=y_min_gen,y_max_gen=y_max_gen)
             coordinates_s.append(c)
 
-            
-
-        #b=get_circle_points(np.radians(20),distance_points,a[0],a[1])
-        #c=get_circle_points(np.radians(20),distance_points,b[0],b[1])
-
         #plt.scatter((a[0],b[0],c[0]),(a[1],b[1],c[1]))
         if draw_plot:
             plt.scatter(x,y)
@@ -161,8 +156,3 @@ class GenCoord():
             return coordinates_s
         else:
             return list(reversed(coordinates_s))
-
-
-#coord=GenCoord()
-#cd=coord.get_coordinates(length_curve=40, angle_range=[90,100], distance_points=.001, delta_angle_max=90,wiggle_room=.5,rigidity=.95, draw_plot=True)
-

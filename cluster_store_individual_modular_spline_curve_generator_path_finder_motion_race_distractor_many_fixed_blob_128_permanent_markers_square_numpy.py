@@ -11,7 +11,6 @@ CHANGELOG:
 import time 
 
 import numpy as np
-# import math
 import random
 import argparse
 import os
@@ -63,6 +62,11 @@ def rectangle(r0, c0, width, height):
 
     return skimage.draw.polygon(rr, cc)
 
+# def plus_marker(r0, c0, width, height):
+
+#     rr, cc = [r0 - 1, r0 - 1, r0 + 1, r0+1], [c0 - 1, c0 - 1, c0 + 1, c0 + 1]
+
+#     return skimage.draw.line(1, 1, 8, 8)
 
 def rectangle_perimeter(r0, c0, width, height, shape=None, clip=False):
     #draws only the perimeter of the rectangle
@@ -75,12 +79,6 @@ def rectangle_perimeter(r0, c0, width, height, shape=None, clip=False):
 ##########################################################################################
 ##                  Coordinate generation logic
 ##########################################################################################
-
-
-
-
-
-
 
 def get_points(nPoints):
     #if seeded, it will return the exact same points for all curves
@@ -101,7 +99,6 @@ def check_range_set(s, number, interval=2):
     Returns: True if the range is in set
     False otherwise
     '''
-    #print('in check_range_set')
     ret=False
     if interval:
         # for non zero intervals
@@ -146,37 +143,54 @@ def get_full_length_coordinates(nPoints, nTimes, normalized, path_length, skip_p
         normal.append(_normal)
     #print('done with range mask\ngenerating coordinates')
     '''
-    
-    #generating coordinates for the positive sample with blob at both ends
-    #xvals, yvals = bezier_curve(get_points(nPoints), nTimes)
-    #coordinates_2 = [(xvals[i],yvals[i]) for i in range(0, nTimes)]
-    
-    #generating coordinates for the positive sample with blob at both ends
-    #using the coordinates generator class
-
     '''
     #Generate 3x the coordinates, and then sample path_length out of them
     '''
-    cd_2=GenCoord()
-    coordinates_2=cd_2.get_coordinates(length_curve=nTimes, angle_range=[90,100], distance_points=.002, delta_angle_max=90,wiggle_room=.95,rigidity=.95, x_min=0,x_max=win_x,y_min=0,y_max=win_y)
+    cd_2a=GenCoord()
+    coordinates_2a=cd_2a.get_coordinates(length_curve=nTimes, angle_range=[90,100], distance_points=.002, delta_angle_max=90,wiggle_room=.95,rigidity=.95, x_min=0,x_max=win_x,y_min=0,y_max=win_y)
 
     #taking one-third points from a random location
-    rn_l=np.random.randint(len(coordinates_2)-(path_length*skip_param)+1)
-    coordinates_2=coordinates_2[rn_l:rn_l+(path_length*skip_param):skip_param]
-##    del coordinates_2[1]
-##    del coordinates_2[1]
-##    del coordinates_2[-2]
-##    del coordinates_2[-2]
-##    del coordinates_2[-2]
-##    del coordinates_2[-2]
+    rn_l=np.random.randint(len(coordinates_2a)-(path_length*skip_param)+1)
+    coordinates_2a=coordinates_2a[rn_l:rn_l+(path_length*skip_param):skip_param]
     #normalizing to an arbitrary location in the screen
     # NEW: shifting the dots by a random number of pixels
     normal=[0,0]
     if normal[0]:
-        #coordinates_2=[((coordinates_2[i][0]-(win_x/float(normal[0]))),(coordinates_2[i][1]-(win_y/float(normal[0])))) for i in range(0,len(coordinates_2))]
-        coordinates_2=[((coordinates_2[i][0]-(float(normal[0]))),(coordinates_2[i][1]-(float(normal[0])))) for i in range(0,len(coordinates_2))]
+        coordinates_2a=[((coordinates_2a[i][0]-(float(normal[0]))),(coordinates_2a[i][1]-(float(normal[0])))) for i in range(0,len(coordinates_2a))]
 
 
+    cd_2b=GenCoord()
+    coordinates_2b=cd_2b.get_coordinates(length_curve=nTimes, angle_range=[90,100], distance_points=.002, delta_angle_max=90,wiggle_room=.95,rigidity=.95, x_min=0,x_max=win_x,y_min=0,y_max=win_y)
+
+    #taking one-third points from a random location
+    rn_l=np.random.randint(len(coordinates_2b)-(path_length*skip_param)+1)
+    coordinates_2b=coordinates_2b[rn_l:rn_l+(path_length*skip_param):skip_param]
+    #normalizing to an arbitrary location in the screen
+    normal=[0,0]
+    if normal[0]:
+        coordinates_2b=[((coordinates_2b[i][0]-(float(normal[0]))),(coordinates_2b[i][1]-(float(normal[0])))) for i in range(0,len(coordinates_2b))]
+    
+    cd_2c=GenCoord()
+    coordinates_2c=cd_2c.get_coordinates(length_curve=nTimes, angle_range=[90,100], distance_points=.002, delta_angle_max=90,wiggle_room=.95,rigidity=.95, x_min=0,x_max=win_x,y_min=0,y_max=win_y)
+
+    #taking one-third points from a random location
+    rn_l=np.random.randint(len(coordinates_2c)-(path_length*skip_param)+1)
+    coordinates_2c=coordinates_2c[rn_l:rn_l+(path_length*skip_param):skip_param]
+    #normalizing to an arbitrary location in the screen
+    normal=[0,0]
+    if normal[0]:
+        coordinates_2c=[((coordinates_2c[i][0]-(float(normal[0]))),(coordinates_2c[i][1]-(float(normal[0])))) for i in range(0,len(coordinates_2c))]
+
+    cd_2d=GenCoord()
+    coordinates_2d=cd_2d.get_coordinates(length_curve=nTimes, angle_range=[90,100], distance_points=.002, delta_angle_max=90,wiggle_room=.95,rigidity=.95, x_min=0,x_max=win_x,y_min=0,y_max=win_y)
+
+    #taking one-third points from a random location
+    rn_l=np.random.randint(len(coordinates_2d)-(path_length*skip_param)+1)
+    coordinates_2d=coordinates_2d[rn_l:rn_l+(path_length*skip_param):skip_param]
+    #normalizing to an arbitrary location in the screen
+    normal=[0,0]
+    if normal[0]:
+        coordinates_2d=[((coordinates_2d[i][0]-(float(normal[0]))),(coordinates_2d[i][1]-(float(normal[0])))) for i in range(0,len(coordinates_2d))]
 
     #generating coordinates for the negative distractor sample of same length
     #xvals, yvals = bezier_curve(get_points(nPoints), nTimes)
@@ -193,25 +207,16 @@ def get_full_length_coordinates(nPoints, nTimes, normalized, path_length, skip_p
     #taking one-third points from a random location
     rn_l=np.random.randint(len(coordinates_3)-(path_length*skip_param)+1)
     coordinates_3=coordinates_3[rn_l:rn_l+(path_length*skip_param):skip_param]
-##    del coordinates_3[1]
-##    del coordinates_3[1]
-##    del coordinates_3[-2]
-##    del coordinates_3[-2]
-##    del coordinates_3[-2]
-##    del coordinates_3[-2]
-
     
     #normalizing to an arbitrary location in the screen
     if normal[1]:
-        #coordinates_3=[((coordinates_3[i][0]-(win_x/float(normal[1]))),(coordinates_3[i][1]-(win_y/float(normal[1])))) for i in range(0,len(coordinates_3))]
         coordinates_3=[((coordinates_3[i][0]-(float(normal[1]))),(coordinates_3[i][1]-(float(normal[1])))) for i in range(0,len(coordinates_3))]
-
 
     #add the normalization coefficients to the normalized set for further use
     normalized.add(normal[0])
     normalized.add(normal[1])
 
-    return np.floor(coordinates_2), np.floor(coordinates_3), normalized
+    return np.floor(coordinates_2a), np.floor(coordinates_2b), np.floor(coordinates_2c), np.floor(coordinates_2d), np.floor(coordinates_3), normalized
 
 
 def get_third_length_distractor_coordinates(nPoints, nTimes, normalized, num_distractors, path_length, skip_param=skip_param):
@@ -232,9 +237,6 @@ def get_third_length_distractor_coordinates(nPoints, nTimes, normalized, num_dis
 
     dis_len=int(nTimes) #length of the distractor. By default one-third for this function
     coord_d=[]
-    #nm_list=list(normalized)
-    #nm_r=set(range(0,17))-normalized
-    #normal=np.random.choice(list(nm_r), num_distractors)
     
     # generating unique normalization positions, which would be used to shift
     # the dots by certain number of pixels
@@ -277,8 +279,6 @@ def get_third_length_distractor_coordinates(nPoints, nTimes, normalized, num_dis
         # normalized.add(normal[i])
         normalized=np.delete(normalized,0)
 
-
-
     return coord_d, normalized
 
 def draw_blobs(coordinates, height, width):
@@ -295,12 +295,8 @@ def draw_blobs(coordinates, height, width):
 
     return rr,cc 
 
-
-    
-    
 nPoints = 2 #no. of points to be fit using the bernstein polynomial (degree of the polynomial to fit)
 nTimes=22#10#16#150 #no. of points in the curve 
-
 
 #if using circle from visual stimulus, use radius
 # radius=1#1.5#3#5
@@ -329,12 +325,8 @@ HUMAN_MODE=args.HUMAN_MODE
 NEGATIVE_SAMPLE=args.NEGATIVE_SAMPLE
 path_length = args.path_length #same as number of frames. To be taken as argparse argument
 
-
 start_sample=args.start_sample
 num_samples=args.num_samples
-
-# images_all=np.ndarray([num_samples-start_sample,path_length,128,128,channels], dtype=np.uint8)
-
 
 # if args.save_image:
 # check if the directory for sample exists, else make one for positive (1) or negative (0)
@@ -345,13 +337,9 @@ if not os.path.exists(path):
 
 for sample in range(start_sample,num_samples):
 
-    # start=time.time()
-    
-
     # make individual directory for the given sample
-    if args.save_image:
+    if args.save_image or args.gif:
         path_to_save=path+"/"+str(int(not args.NEGATIVE_SAMPLE))+"_sample_"+str(sample)+"/"
-        # print("Saving to: "+path_to_save)
         try:
             os.makedirs(path_to_save)
         except OSError:
@@ -360,30 +348,10 @@ for sample in range(start_sample,num_samples):
     points = get_points(nPoints)
     normalized=set([])
 
-
-
-
-
-    #coordinates = [(xvals[i],yvals[i]) for i in range(nTimes)]
-    #normalizing to the center of the screen
-    #coordinates=[((coordinates[i][0]-(win_x/2.)),(coordinates[i][1]-(win_y/2.))) for i in range(0,len(coordinates))]
-
     #get full length normalized coordinates for the positive and same length distractor
     #function also returns the updated normalized set
     #calling with 2 extra points so that those can be deleted later
-    coordinates_2, coordinates_3, normalized = get_full_length_coordinates(nPoints, nTimes*3, normalized, path_length)
-    #print(normalized)
-    # print(len(coordinates_2))
-    # print(len(coordinates_3))
-
-
-    #using third length distractor function for full paths as well
-    #coordinates_2,normalized = get_third_length_distractor_coordinates()
-
-    #making distractors of length 50 (=150/3) on the fly
-    #coordinates_4, coordinates_5, normalized = get_full_length_coordinates(nPoints, nTimes, normalized)
-    #coordinates_4=coordinates_4[:50]
-    #coordinates_5=coordinates_5[:50]
+    coordinates_2a, coordinates_2b, coordinates_2c, coordinates_2d, coordinates_3, normalized = get_full_length_coordinates(nPoints, nTimes*3, normalized, path_length)
 
     # generate a new set of normalized coordinates beforehand, and pass it to the function to generate coordinates shifted by that much
     # normalized=np.random.choice(np.arange(-13,13),args.num_distractors+args.extra_dist, replace=False) #DISPLACE THE COORDINATES BY A RANDOM NUMBER OF PIXELS
@@ -398,22 +366,19 @@ for sample in range(start_sample,num_samples):
     coordinates_e, normalized = get_third_length_distractor_coordinates(nPoints, nTimes*3, normalized, extra_dist, path_length)
 
 
-    '''
-    #updating nTimes here to counter
-    #for the change in coordinate positions
-    '''
-    # nTimes=nTimes*3
-
-
-
-
     ##########################################################################################
     ##                  Start drawing here
     ##                  path_length is the same as number of frames
     ##########################################################################################
 
-
     images=np.zeros((path_length,32,32,channels), dtype=np.uint8)
+
+    images_gif = []
+
+    # One of the 4 blobs must end in the blue rectangle for a positive example
+    # Here, one of the 4 coordinates is selected at random to end in the blue marker
+    # this is not redundant since the 4 points have different markers
+    random_positive_sample = random.choice([coordinates_2a, coordinates_2b, coordinates_2c, coordinates_2d])
 
     for frame in range(0,path_length):
         # import pdb; pdb.set_trace()
@@ -426,62 +391,65 @@ for sample in range(start_sample,num_samples):
             images[frame,rr, cc] = (0,255,0)
         
         #positive instance 
-
-
-        # draw the two blobs
+        # draw the blobs
         # based on positive/negative sample
-        rr, cc = draw_blobs(coordinates_2[0],blob_height,blob_width)
+        rr, cc = draw_blobs(coordinates_2a[0],blob_height,blob_width)
         images[frame,rr, cc] = (255,0,0) #128 #red starting open square
+        rr, cc = draw_blobs(coordinates_2b[0],blob_height,blob_width)
+        images[frame,rr, cc] = (255,0,0) #128 #red starting open square
+        rr, cc = draw_blobs(coordinates_2c[0],blob_height,blob_width)
+        images[frame,rr, cc] = (255,0,0) #128 #red starting open square
+        rr, cc = draw_blobs(coordinates_2d[0],blob_height,blob_width)
+        images[frame,rr, cc] = (255,0,0) #128 #red starting open square
+
         # draw the end of path from coordinates_3 if NEGATIVE_SAMPLE, else from cordinates_2 if positive sample
         if args.NEGATIVE_SAMPLE:
             rr, cc = draw_blobs(coordinates_3[path_length-1],blob_height,blob_width)
         else:
-            rr, cc = draw_blobs(coordinates_2[path_length-1],blob_height,blob_width)
-        # rr, cc = rectangle_perimeter(np.floor(coordinates_2[63][0]), np.floor(coordinates_2[63][1]), 3, 3)
-        images[frame,rr, cc] = (0, 0, 255) #light blue # (255, 184, 82) #Pastel Orange #(0,0,255) #blue ending open square
-
-
+            rr, cc = draw_blobs(random_positive_sample[path_length-1],blob_height,blob_width)
+        images[frame,rr, cc] = (0, 0, 255) #light blue # (255, 184, 82) #Pastel Orange #(0,0,255) #blue ending rectangle
 
 
         # draw the points for two full length paths
-        # since the full length coordinates are already floored, the blob drawn is floored as well, so squares have to be shifted by 1 pixel to fit in the center of the blob
-        rr, cc = rectangle(coordinates_2[frame][0]+1,coordinates_2[frame][1]+1,square_height,square_width)
+        # since the full length coordinates are already floored, the blob drawn is floored as well, 
+        # so squares have to be shifted by 1 pixel to fit in the center of the blob
+        rr, cc = rectangle(coordinates_2a[frame][0]+1,coordinates_2a[frame][1]+1,square_height,square_width)
+        images[frame, rr, cc] = (0,255,0)
+
+        rr, cc = rectangle(coordinates_2b[frame][0]+1,coordinates_2b[frame][1]+1,square_height,square_width)
+        images[frame, rr, cc] = (0,255,0)
+
+        rr, cc = rectangle(coordinates_2c[frame][0]+1,coordinates_2c[frame][1]+1,square_height,square_width)
+        images[frame, rr, cc] = (0,255,0)
+
+        rr, cc = rectangle(coordinates_2d[frame][0]+1,coordinates_2d[frame][1]+1,square_height,square_width)
         images[frame, rr, cc] = (0,255,0)
 
         rr, cc = rectangle(coordinates_3[frame][0]+1,coordinates_3[frame][1]+1,square_height,square_width)
         images[frame, rr, cc] = (0,255,0)
 
-        # try:
-        #     os.makedirs(args.path+"/sample_"+str(sample))
-        # except OSError:
-        #     continue
+        # Adding markers for the 4 dots for the first n frames only
+        if frame <= 30:
+            rr, cc = rectangle(coordinates_2a[frame][0]+1,coordinates_2a[frame][1]+1,square_height,square_width)
+            images[frame, rr, cc] = (255, 153, 153) # light pink
+            rr, cc = rectangle(coordinates_2b[frame][0]+1,coordinates_2b[frame][1]+1,square_height,square_width)
+            images[frame, rr, cc] = (102, 178, 255) # light blue
+            rr, cc = rectangle(coordinates_2c[frame][0]+1,coordinates_2c[frame][1]+1,square_height,square_width)
+            images[frame, rr, cc] = (255, 128, 0) # orange
+            rr, cc = rectangle(coordinates_2d[frame][0]+1,coordinates_2d[frame][1]+1,square_height,square_width)
+            images[frame, rr, cc] = (255, 255, 153) # yellow
+ 
+        # Handling GIFs
+        repeat_factor=8
+        images_frame = images[frame].repeat(repeat_factor, axis = 0).repeat(repeat_factor, axis = 1)
+        images_gif.append(images_frame)
+
         if args.save_image:
             imageio.imwrite(path_to_save+"/frame_"+str(frame)+".png", images[frame])
         
-    # images_all[sample]=images
     # write every sample to disk as npy array
     np.save(path+"/"+str(int(not args.NEGATIVE_SAMPLE))+"_sample_"+str(sample), images, allow_pickle=False)
 
-    # end=time.time()
-    # print(end-start)
-
-# writing to disk time
-# could convert to sparse matrix before writing and to_dense after reading
-# start=time.time()
-# np.savez_compressed(path+"/samples_"+str(int(not args.NEGATIVE_SAMPLE))+"_"+str(args.start_sample)+"_"+str(args.num_samples)+".npz",images_all)
-# end=time.time()
-# print("Disk save: "+str(end-start))
-
-
-# start=time.time()
-# a=np.load(path+"/samples_"+str(int(not args.NEGATIVE_SAMPLE))+"_"+str(args.start_sample)+"_"+str(args.num_samples)+".npz")
-# end=time.time()
-# print("Disk load: "+str(end-start))
-
-# print(False in (a['arr_0']==images_all))
-
-
-
-
-
-# sys.exit(0)
+    # SAVING GIFs
+    if args.gif:
+        imageio.mimsave(path_to_save+"/GIF.gif", images_gif, fps = 15)

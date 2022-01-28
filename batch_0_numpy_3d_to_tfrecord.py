@@ -101,8 +101,8 @@ def interpret_npy_header(encoded_image_data):
         
 
 #define input and output data directory
-tf.compat.v1.flags.DEFINE_string('input_directory', '/14_dist/batch_0/0/','Input data directory')
-tf.compat.v1.flags.DEFINE_string('output_directory', '/14_dist/tfrecords/','Output data directory')
+tf.compat.v1.flags.DEFINE_string('input_directory', './1/','Input data directory')
+tf.compat.v1.flags.DEFINE_string('output_directory', './tfrecords/','Output data directory')
 
 #define how many training a validatin (and test) TFRecord files you want to write
 tf.compat.v1.flags.DEFINE_integer('train_shards', 40, 'Number of shards in training TFRecord files.') #2
