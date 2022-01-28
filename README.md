@@ -1,4 +1,4 @@
-# PathTracker Data Generator - Psycophysics Experiment 2
+# PathTracker Data Generator - Psychophysics Experiment 2
 
 This repository generates pathtracker samples as follows:
 
