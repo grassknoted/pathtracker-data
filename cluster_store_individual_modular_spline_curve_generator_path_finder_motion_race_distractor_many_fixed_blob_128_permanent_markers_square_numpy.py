@@ -15,6 +15,7 @@ import random
 import argparse
 import os
 import skimage  # try and use only the draw functions, and not the entire library
+import skimage.draw
 import imageio  # can be eliminated altogether if not writing images, just dumping np array
 # from scipy.sparse import coo_matrix # make sparse matrix for individual frames, and then write to a bigger np.ndarray 
 
