@@ -331,7 +331,7 @@ num_samples=args.num_samples
 # if args.save_image:
 # check if the directory for sample exists, else make one for positive (1) or negative (0)
 # make the directory in any case, given the bigger npz/tfrecords files would also be stored in their respective sample directories
-path=args.path+"/"+str(int(not args.NEGATIVE_SAMPLE))
+path=args.path+"/"+str(int(not args.NEGATIVE_SAMPLE))+"_train"
 if not os.path.exists(path):
     os.makedirs(path)
 
@@ -393,22 +393,15 @@ for sample in range(start_sample,num_samples):
         #positive instance 
         # draw the blobs
         # based on positive/negative sample
-        rr, cc = draw_blobs(coordinates_2a[0],blob_height,blob_width)
-        images[frame,rr, cc] = (255,0,0) #128 #red starting open square
-        rr, cc = draw_blobs(coordinates_2b[0],blob_height,blob_width)
-        images[frame,rr, cc] = (255,0,0) #128 #red starting open square
-        rr, cc = draw_blobs(coordinates_2c[0],blob_height,blob_width)
-        images[frame,rr, cc] = (255,0,0) #128 #red starting open square
-        rr, cc = draw_blobs(coordinates_2d[0],blob_height,blob_width)
-        images[frame,rr, cc] = (255,0,0) #128 #red starting open square
-
-        # draw the end of path from coordinates_3 if NEGATIVE_SAMPLE, else from cordinates_2 if positive sample
-        if args.NEGATIVE_SAMPLE:
-            rr, cc = draw_blobs(coordinates_3[path_length-1],blob_height,blob_width)
-        else:
-            rr, cc = draw_blobs(random_positive_sample[path_length-1],blob_height,blob_width)
-        images[frame,rr, cc] = (0, 0, 255) #light blue # (255, 184, 82) #Pastel Orange #(0,0,255) #blue ending rectangle
-
+        # Removing blobs based on point 1
+        # rr, cc = draw_blobs(coordinates_2a[0],blob_height,blob_width)
+        # images[frame,rr, cc] = (255,0,0) #128 #red starting open square
+        # rr, cc = draw_blobs(coordinates_2b[0],blob_height,blob_width)
+        # images[frame,rr, cc] = (255,0,0) #128 #red starting open square
+        # rr, cc = draw_blobs(coordinates_2c[0],blob_height,blob_width)
+        # images[frame,rr, cc] = (255,0,0) #128 #red starting open square
+        # rr, cc = draw_blobs(coordinates_2d[0],blob_height,blob_width)
+        # images[frame,rr, cc] = (255,0,0) #128 #red starting open square
 
         # draw the points for two full length paths
         # since the full length coordinates are already floored, the blob drawn is floored as well, 
@@ -428,27 +421,46 @@ for sample in range(start_sample,num_samples):
         rr, cc = rectangle(coordinates_3[frame][0]+1,coordinates_3[frame][1]+1,square_height,square_width)
         images[frame, rr, cc] = (0,255,0)
 
+        # draw the end of path from coordinates_3 if NEGATIVE_SAMPLE, else from cordinates_2 if positive sample
+        if args.NEGATIVE_SAMPLE:
+            # rr, cc = draw_blobs(coordinates_3[path_length-1],blob_height,blob_width)
+            rr, cc = rectangle(coordinates_3[path_length-1]+1, coordinates_3[path_length-1]+1, square_height,square_width)
+        else:
+            rr, cc = rectangle(random_positive_sample[frame][0]+1, random_positive_sample[frame][1]+1,square_height,square_width)
+            # rr, cc = draw_blobs(random_positive_sample[path_length-1],blob_height,blob_width)
+        if frame >= 63:
+            images[frame,rr , cc] = (0, 0, 255) #light blue # (255, 184, 82) #Pastel Orange #(0,0,255) #blue ending rectangle
+
+
         # Adding markers for the 4 dots for the first n frames only
-        if frame <= 30:
+        if frame <= 0:
             rr, cc = rectangle(coordinates_2a[frame][0]+1,coordinates_2a[frame][1]+1,square_height,square_width)
-            images[frame, rr, cc] = (255, 153, 153) # light pink
+            images[frame, rr, cc] = (255, 0, 0) # light pink
             rr, cc = rectangle(coordinates_2b[frame][0]+1,coordinates_2b[frame][1]+1,square_height,square_width)
-            images[frame, rr, cc] = (102, 178, 255) # light blue
+            images[frame, rr, cc] = (255, 0, 0) # light blue
             rr, cc = rectangle(coordinates_2c[frame][0]+1,coordinates_2c[frame][1]+1,square_height,square_width)
-            images[frame, rr, cc] = (255, 128, 0) # orange
+            images[frame, rr, cc] = (255, 0, 0) # orange
             rr, cc = rectangle(coordinates_2d[frame][0]+1,coordinates_2d[frame][1]+1,square_height,square_width)
-            images[frame, rr, cc] = (255, 255, 153) # yellow
+            images[frame, rr, cc] = (255, 0, 0) # yellow
  
-        # Handling GIFs
+        # write every sample to disk as npy array
+        np.save(path+"/"+str(int(not args.NEGATIVE_SAMPLE))+"_sample_"+str(sample), images, allow_pickle=False)
+
+        # Making it more observable for humans:
         repeat_factor=8
         images_frame = images[frame].repeat(repeat_factor, axis = 0).repeat(repeat_factor, axis = 1)
+
         images_gif.append(images_frame)
+        # Handling GIFs
+        if frame <1 or frame >62:
+            repeat_number = 5
+            for i in range(repeat_number):
+                images_gif.append(images_frame)
+                if args.save_image:
+                    imageio.imwrite(path_to_save+"/frame_"+str(frame)+"_"+str(i)+".png", images[frame])
 
         if args.save_image:
             imageio.imwrite(path_to_save+"/frame_"+str(frame)+".png", images[frame])
-        
-    # write every sample to disk as npy array
-    np.save(path+"/"+str(int(not args.NEGATIVE_SAMPLE))+"_sample_"+str(sample), images, allow_pickle=False)
 
     # SAVING GIFs
     if args.gif:

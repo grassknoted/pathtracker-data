@@ -1,11 +1,4 @@
-# PathTracker Data Generator - Psychophysics Experiment 2
-
-This repository generates pathtracker samples as follows:
-
-![PathTracker Sample 1](https://github.com/grassknoted/pathtracker-data/blob/main/1/1_sample_1/GIF.gif)
-![PathTracker Sample 2](https://github.com/grassknoted/pathtracker-data/blob/main/1/1_sample_4/GIF.gif)
-![PathTracker Sample 3](https://github.com/grassknoted/pathtracker-data/blob/main/1/1_sample_7/GIF.gif)
-
+# PathTracker data generator
 
 The file `cluster_store_individual_modular_spline_curve_generator_path_finder_motion_race_distractor_many_fixed_blob_128_permanent_markers_square_numpy.py` is the main plotting logic, while `spline_scaled_curve_generator_class.py` is the class for generating coordinates of the trajectories beforehand. 
 

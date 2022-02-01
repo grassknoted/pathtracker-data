@@ -12,8 +12,8 @@ radius=1 #default=1 height and width of the squares in stimuli
 # echo $last_sample
 # arrIN=(${last_sample//_/ })
 # echo $arrIN
-num_samples=10 #0000
-num_distractors=8 #10 #default=10 number of distractor paths
+num_samples=10000 #0000
+num_distractors=10 #10 #default=10 number of distractor paths
 extra_dist=0 #4 #default=4 number of extra distractor paths
 HUMAN_MODE=0 #default=0 Generate movie in human mode with lines [REMOVED]
 skip_param=1 #default=1 number of coordinates to skip when generating coordinates. Increase speed/path length. MIN:1, MAX:5
@@ -21,7 +21,7 @@ path_length=64 #default=64 length of the trajectory, also equals the number of f
 NEGATIVE_SAMPLE=0 #default=0 Generate a negative sample of movie
 gif=1 #default=0 Generate a gif of movie as well in the same folder as path [REMOVED]
 save_image=1 #default=0 save images of the generated sample as .png files
-path="./2/" #default=pwd path at which the stimuli should be stored
+path="./" #default=pwd path at which the stimuli should be stored
 outer_path="./" #outer path under which the pos and neg stim directories reside
 # echo $path
 # echo $outer_path
@@ -33,7 +33,7 @@ outer_path="./" #outer path under which the pos and neg stim directories reside
 # echo $last_sample
 # start_sample=$(($last_sample-3))
 start_sample=0
-echo $start_sample
+# echo $start_sample
 # echo "Bash version ${BASH_VERSION}..."
 
 # for i in {"$start_sample".."$num_samples"}
