@@ -466,3 +466,6 @@ for sample in range(start_sample,num_samples):
     # SAVING GIFs
     if args.gif:
         imageio.mimsave(path_to_save+"/GIF.gif", images_gif, fps = 15)
+    
+    # Logging
+    print("Processed sample", str(sample))
