@@ -425,12 +425,12 @@ for sample in range(start_sample,num_samples):
         # draw the end of path from coordinates_3 if NEGATIVE_SAMPLE, else from cordinates_2 if positive sample
         if args.NEGATIVE_SAMPLE:
             # rr, cc = draw_blobs(coordinates_3[path_length-1],blob_height,blob_width)
-            rr, cc = rectangle(coordinates_3[path_length-1]+1, coordinates_3[path_length-1]+1, square_height,square_width)
+            rr, cc = rectangle(coordinates_3[frame][0]+1, coordinates_3[frame][1]+1, square_height,square_width)
         else:
-            rr, cc = rectangle(random_positive_sample[frame][0]+1, random_positive_sample[frame][1]+1,square_height,square_width)
+            rr, cc = rectangle(random_positive_sample[frame][0]+1, random_positive_sample[frame][1]+1, square_height, square_width)
             # rr, cc = draw_blobs(random_positive_sample[path_length-1],blob_height,blob_width)
         if frame >= 63:
-            images[frame,rr , cc] = (0, 0, 255) #light blue # (255, 184, 82) #Pastel Orange #(0,0,255) #blue ending rectangle
+            images[frame, rr, cc] = (0, 0, 255) #light blue # (255, 184, 82) #Pastel Orange #(0,0,255) #blue ending rectangle
 
 
         # Adding markers for the 4 dots for the first n frames only

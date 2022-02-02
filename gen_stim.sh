@@ -18,7 +18,7 @@ extra_dist=0 #4 #default=4 number of extra distractor paths
 HUMAN_MODE=0 #default=0 Generate movie in human mode with lines [REMOVED]
 skip_param=1 #default=1 number of coordinates to skip when generating coordinates. Increase speed/path length. MIN:1, MAX:5
 path_length=64 #default=64 length of the trajectory, also equals the number of frames in the sequence
-NEGATIVE_SAMPLE=0 #default=0 Generate a negative sample of movie
+NEGATIVE_SAMPLE=1 #default=0 Generate a negative sample of movie
 gif=1 #default=0 Generate a gif of movie as well in the same folder as path [REMOVED]
 save_image=1 #default=0 save images of the generated sample as .png files
 path="./" #default=pwd path at which the stimuli should be stored
